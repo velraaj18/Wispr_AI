@@ -735,5 +735,3 @@ function connectWispr() {
 - **Choose Wispr Flow** for polished, context-aware transcription when you can wait 2-5 seconds and have enterprise approval
 
 Both services excel at their respective use cases. Start with Deepgram for prototyping, then evaluate Wispr Flow if your application needs the additional LLM enhancement and you can secure API access.
-
-3605bd3b9ea266a826aeb7c85df97be0d983f186
