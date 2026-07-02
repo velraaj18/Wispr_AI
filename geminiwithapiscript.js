@@ -104,6 +104,7 @@ $(document).ready(function () {
 
         isListening = true;
 
+        $(".inputContainer").addClass("is-listening");
         $("#micButton").text("⏹");
         $("#status").text("🔴 Recording...");
       } catch (error) {
@@ -132,6 +133,7 @@ $(document).ready(function () {
       mediaStreamSource = null;
 
       isListening = false;
+      $(".inputContainer").removeClass("is-listening");
       $("#status").text("Stopped");
       $("#micButton").text("🎤");
     }

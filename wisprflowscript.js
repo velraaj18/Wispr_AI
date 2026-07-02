@@ -99,6 +99,7 @@ $(document).ready(function () {
         };
 
         isListening = true;
+        $(".inputContainer").addClass("is-listening");
         $("#micButton").text("⏹");
         $("#status").text("🔴 Recording...");
       } catch (error) {
@@ -133,6 +134,7 @@ $(document).ready(function () {
       mediaStream = null;
       mediaStreamSource = null;
       isListening = false;
+      $(".inputContainer").removeClass("is-listening");
 
       $("#micButton").text("🎤");
       $("#status").text("Processing...");
@@ -196,6 +198,7 @@ $(document).ready(function () {
 
         if (response.final) {
           $("#status").text("✅ Done");
+          $(".inputContainer").removeClass("is-listening");
           socket.close();
           socket = null;
         }

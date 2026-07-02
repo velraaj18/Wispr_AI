@@ -3,33 +3,70 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
     <title>Wispr Flow Demo</title>
 
     <link rel="stylesheet" href="style.css" />
   </head>
 
   <body>
-    <div class="container">
-      <h1>Wispr Flow Demo</h1>
+    <div class="page">
+      <!-- Live Speech Text -->
+      <h1 id="liveText">What's on your mind today?</h1>
 
-      <div class="prompt-box">
-        <input id="promptInput" type="text" placeholder="Ask anything..." />
+      <!-- Prompt Box -->
+      <div class="promptBox">
+        <!-- Plus Button -->
+        <button class="iconButton" id="plusButton">+</button>
 
-        <button id="micButton">🎤</button>
+        <!-- Input / Wave Area -->
+        <div class="inputContainer">
+          <!-- Normal Input -->
+          <input
+            id="promptInput"
+            type="text"
+            placeholder="Ask anything..."
+            autocomplete="off"
+          />
+
+          <!-- Audio Wave -->
+          <canvas id="waveCanvas"></canvas>
+        </div>
+
+        <!-- Mic Button -->
+        <button id="micButton" class="micButton">🎤</button>
       </div>
 
-      <p id="status">Status: Idle</p>
-      <p>Sample Rate : <span id="sampleRate">0</span> Hz</p>
+      <!-- Optional Shortcuts -->
+      <div class="quickActions">
+        <button>Create an image</button>
 
-      <p>Buffered : <span id="bufferedSamples">0</span> / 2400</p>
+        <button>Write or edit</button>
 
-      <p>Volume</p>
+        <button>Look something up</button>
+      </div>
+    </div>
+
+    <!-- Hidden Debug Section -->
+    <div id="debugPanel">
+      <p id="status">Status : Idle</p>
+
+      <p>
+        Sample Rate :
+        <span id="sampleRate">0</span> Hz
+      </p>
+
+      <p>
+        Buffered :
+        <span id="bufferedSamples">0</span> / 2400
+      </p>
 
       <progress id="volumeBar" value="0" max="100"></progress>
     </div>
 
     <!-- jQuery -->
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
-    <script src="groq.js"></script>
+
+    <script src="googleSTT.js"></script>
   </body>
 </html>

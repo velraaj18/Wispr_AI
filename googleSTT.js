@@ -107,6 +107,7 @@ $(document).ready(function () {
 
         isListening = true;
 
+        $(".inputContainer").addClass("is-listening");
         $("#micButton").text("⏹");
         $("#status").text("🔴 Recording...");
       } catch (error) {
@@ -146,7 +147,7 @@ $(document).ready(function () {
     // Now connecting to the Python server instead of Google STT directly
     let finalTranscript = "";
 
-    socket = new WebSocket("ws://localhost:8000/ws/transcribe");
+    socket = new WebSocket("ws://localhost:7000/ws/transcribe");
 
     socket.onopen = () => {
       $("#status").text("🟢 Connected to Google STT");
@@ -174,6 +175,7 @@ $(document).ready(function () {
           socket.close();
           socket = null;
         }
+        $(".inputContainer").removeClass("is-listening");
         $("#status").text("Stopped");
         $("#micButton").text("🎤");
         isListening = false;

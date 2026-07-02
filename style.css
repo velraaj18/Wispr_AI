@@ -1,58 +1,296 @@
+/* ===========================
+   Global
+=========================== */
+
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: "Segoe UI", sans-serif;
 }
 
 body {
-  background: #f5f5f5;
+  background: #0d0d0d;
+  color: white;
+
+  width: 100vw;
   height: 100vh;
+
+  overflow: hidden;
+
   display: flex;
   justify-content: center;
   align-items: center;
 }
 
-.container {
-  width: 700px;
-}
+/* ===========================
+   Main Page
+=========================== */
 
-h1 {
-  margin-bottom: 25px;
-  text-align: center;
-}
-
-.prompt-box {
+.page {
+  width: min(900px, 90%);
   display: flex;
-  border: 1px solid #ccc;
-  border-radius: 12px;
-  overflow: hidden;
-  background: white;
+  flex-direction: column;
+  align-items: center;
 }
 
-.prompt-box input {
-  flex: 1;
-  border: none;
-  padding: 18px;
-  font-size: 16px;
-  outline: none;
+/* ===========================
+   Heading
+=========================== */
+
+#liveText {
+  font-size: 44px;
+  font-weight: 500;
+
+  text-align: center;
+
+  margin-bottom: 60px;
+
+  min-height: 60px;
+
+  transition: 0.25s ease;
 }
 
-.prompt-box button {
-  width: 70px;
-  border: none;
-  cursor: pointer;
-  font-size: 24px;
-  background: white;
+/* ===========================
+   Prompt Box
+=========================== */
+
+.promptBox {
+  width: 100%;
+
+  background: #2a2a2a;
+
+  border-radius: 35px;
+
+  padding: 10px;
+
+  display: flex;
+  align-items: center;
+
+  gap: 10px;
+
   transition: 0.3s;
 }
 
-.prompt-box button:hover {
-  background: #efefef;
+.promptBox:focus-within {
+  box-shadow: 0 0 0 1px #555;
 }
 
-#status {
-  margin-top: 20px;
-  text-align: center;
-  color: #555;
+/* ===========================
+   Plus Button
+=========================== */
+
+.iconButton {
+  width: 45px;
+  height: 45px;
+
+  border: none;
+  border-radius: 50%;
+
+  background: transparent;
+
+  color: white;
+
+  font-size: 30px;
+
+  cursor: pointer;
+
+  transition: 0.2s;
+}
+
+.iconButton:hover {
+  background: #3b3b3b;
+}
+
+/* ===========================
+   Input Area
+=========================== */
+
+.inputContainer {
+  flex: 1;
+
+  position: relative;
+
+  display: flex;
+  align-items: center;
+  min-height: 42px;
+}
+
+#promptInput {
+  width: 100%;
+
+  background: transparent;
+
+  border: none;
+  outline: none;
+
+  color: white;
+
+  font-size: 20px;
+
+  padding: 12px 8px;
+  position: relative;
+  z-index: 2;
+}
+
+#promptInput::placeholder {
+  color: #a5a5a5;
+}
+
+/* ===========================
+   Wave Canvas
+=========================== */
+
+#waveCanvas {
+  width: 100%;
+  height: 42px;
+
+  display: none;
+
+  background: transparent;
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  opacity: 0.95;
+}
+
+/* ===========================
+   Mic Button
+=========================== */
+
+.micButton {
+  width: 52px;
+  height: 52px;
+
+  border: none;
+  border-radius: 50%;
+
+  background: white;
+
+  color: black;
+
+  font-size: 22px;
+
+  cursor: pointer;
+
+  transition: 0.2s;
+}
+
+.micButton:hover {
+  transform: scale(1.05);
+}
+
+/* ===========================
+   Recording Animation
+=========================== */
+
+.micButton.recording {
+  background: #ff4d4d;
+  color: white;
+
+  animation: pulse 1s infinite;
+}
+
+@keyframes pulse {
+  0% {
+    box-shadow: 0 0 0 0 rgba(255, 77, 77, 0.7);
+  }
+
+  70% {
+    box-shadow: 0 0 0 14px rgba(255, 77, 77, 0);
+  }
+
+  100% {
+    box-shadow: 0 0 0 0 rgba(255, 77, 77, 0);
+  }
+}
+
+/* ===========================
+   Quick Buttons
+=========================== */
+
+.quickActions {
+  display: flex;
+  gap: 15px;
+
+  margin-top: 25px;
+
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.quickActions button {
+  background: transparent;
+
+  color: #d8d8d8;
+
+  border: 1px solid #4a4a4a;
+
+  border-radius: 25px;
+
+  padding: 12px 18px;
+
+  cursor: pointer;
+
+  font-size: 15px;
+
+  transition: 0.25s;
+}
+
+.quickActions button:hover {
+  background: #333;
+}
+
+/* ===========================
+   Hidden Debug Panel
+=========================== */
+
+#debugPanel {
+  display: none;
+}
+
+/* ===========================
+   Responsive
+=========================== */
+
+@media (max-width: 700px) {
+  #liveText {
+    font-size: 32px;
+  }
+
+  #promptInput {
+    font-size: 17px;
+  }
+
+  .promptBox {
+    border-radius: 25px;
+  }
+
+  .micButton {
+    width: 46px;
+    height: 46px;
+  }
+}
+
+.is-listening #promptInput {
+  opacity: 0;
+}
+
+.is-listening #waveCanvas {
+  display: block;
+  animation: wavePulse 1.6s ease-in-out infinite;
+}
+
+@keyframes wavePulse {
+  0%,
+  100% {
+    opacity: 0.55;
+    transform: scaleY(0.96);
+  }
+
+  50% {
+    opacity: 0.95;
+    transform: scaleY(1);
+  }
 }
